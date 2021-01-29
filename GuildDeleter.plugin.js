@@ -1,6 +1,7 @@
 /**
  * @name GuildDeleter
  * @authorId 474244820303609877
+ * @version 2.0.0
  * @source https://raw.githubusercontent.com/GrayAi0/GuildDeleter/master/GuildDeleter.plugin.js
  * @updateUrl https://raw.githubusercontent.com/GrayAi0/GuildDeleter/master/GuildDeleter.plugin.js
 */
@@ -9,7 +10,7 @@ const config = {
     "info": {
         "name": "GuildDeleter",
         "author": "Gray F",
-        "version": "0.0.1",
+        "version": "2.0.0",
         "description": "This plugin show for you the guilds (servers), you in and allows you to delete them with the click of a button"
     },
     "source": {
@@ -71,8 +72,11 @@ module.exports = (_ => {
         }
     
         async onStart() {
-            let r = BDFDB.PluginUtils.showUpdateNotice(this.getName(), this.getSource())
-            console.log(r)
+            BDFDB.PluginUtils.load({
+                name: this.getName(),
+                rawUrl: this.getSource(),
+                version: this.getVersion()
+            })
             this.main();
 
             BdApi.injectCSS('servers-view', `
@@ -297,8 +301,6 @@ module.exports = (_ => {
         }
 
         main() {
-            console.log(BDFDB)
-
             this.reanderButton()
         }
 
