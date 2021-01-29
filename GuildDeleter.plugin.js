@@ -68,7 +68,7 @@ module.exports = (_ => {
         onStart() {
             
 
-
+            BDFDB.PatchUtils.forceAllUpdates(this);
             this.main();
 
             BdApi.injectCSS('servers-view', `
@@ -165,6 +165,7 @@ module.exports = (_ => {
         }
     
         onStop() {
+			BDFDB.PatchUtils.forceAllUpdates(this);
             BdApi.clearCSS('servers-view')
             clearInterval(this.interval)
             for(let elm of this.createdElmantes) {
