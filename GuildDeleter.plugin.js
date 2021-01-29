@@ -5,13 +5,17 @@
  * @updateUrl https://raw.githubusercontent.com/GrayAi0/GuildDeleter/master/GuildDeleter.plugin.js
 */
 
-const CONFIG = {
+const config = {
     "info": {
         "name": "GuildDeleter",
         "author": "Gray F",
-        "version": "1.0.0",
+        "version": "0.0.1",
         "description": "This plugin show for you the guilds (servers), you in and allows you to delete them with the click of a button"
     },
+    "source": {
+        "url": "https://raw.githubusercontent.com/GrayAi0/GuildDeleter/master/GuildDeleter.plugin.js"
+    },
+
     "changeLog": {
     }
 }
@@ -51,10 +55,11 @@ module.exports = (_ => {
         }
         button = null;
     
-        getName() {return CONFIG.info.name;}
-        getDescription() {return CONFIG.info.description;}
-        getVersion() {return CONFIG.info.version;}
-        getAuthor() {return CONFIG.info.author;}
+        getName() {return config.info.name;}
+        getDescription() {return config.info.description;}
+        getVersion() {return config.info.version;}
+        getAuthor() {return config.info.author;}
+        getSource() {return config.source.url;}
     
     
         onLoad() {
@@ -65,10 +70,9 @@ module.exports = (_ => {
             };
         }
     
-        onStart() {
-            
-
-            BDFDB.PatchUtils.forceAllUpdates(this);
+        async onStart() {
+            let r = BDFDB.PluginUtils.showUpdateNotice(this.getName(), this.getSource())
+            console.log(r)
             this.main();
 
             BdApi.injectCSS('servers-view', `
@@ -294,22 +298,10 @@ module.exports = (_ => {
 
         main() {
             console.log(BDFDB)
-            let text = 'da-label'
-            for(let _key in BDFDB.DiscordClassModules) {
-                let _value = BDFDB.DiscordClassModules[_key]
-                for(let key in _value) {
-                    let value = _value[key]
-                    
-                    if(value.indexOf(text) > -1) {
-                        console.log(`${_key}.${key} == ${text}`)
-                    }
-
-                }
-            }
 
             this.reanderButton()
         }
 
-    }})(window.BDFDB_Global.PluginUtils.buildPlugin(CONFIG))
+    }})(window.BDFDB_Global.PluginUtils.buildPlugin(config))
 
 })();
